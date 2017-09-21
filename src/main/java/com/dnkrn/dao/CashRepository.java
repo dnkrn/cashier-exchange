@@ -32,7 +32,7 @@ public interface CashRepository {
     BigDecimal getTotalAvailableAmount();
 
     /**
-     * returns the number of quantity availble for each denomination
+     * returns the number of quantity available for each denomination
      *
      * @param denomination
      * @return

@@ -228,7 +228,7 @@ public class CashExchangeTest extends TestCase {
     /**
      * 20 10 5 2 1
      * 0  1  0 1  1  - 13 $
-     *
+     *No change found
      * @throws ChangeNotFoundException
      */
     @Test
@@ -384,6 +384,161 @@ public class CashExchangeTest extends TestCase {
         assertEquals(BigInteger.valueOf(8), currencyExchange.getOneDollars());
 
     }
+
+
+    /**
+     * 20 10 5 2 1
+     * 0  0  0 6 1  - 13 $
+     * 0  0  0 4 0  - 8 $
+     *
+     * @throws ChangeNotFoundException
+     */
+    @Test
+    public void testExchangeMoney8DollarCase6() throws ChangeNotFoundException {
+
+        denominationIntegerMap.put(Denomination.TWENTY, BigInteger.valueOf(0));
+        denominationIntegerMap.put(Denomination.TEN, BigInteger.valueOf(0));
+        denominationIntegerMap.put(Denomination.FIVE, BigInteger.valueOf(0));
+        denominationIntegerMap.put(Denomination.TWO, BigInteger.valueOf(6));
+        denominationIntegerMap.put(Denomination.ONE, BigInteger.valueOf(1));
+        cashRepository.initRegistryInfo(denominationIntegerMap);
+
+        assertEquals(BigDecimal.valueOf(13.0), cashRepository.getTotalAvailableAmount());
+
+
+        CurrencyExchange currencyExchange = cashRepository.exchangeMoney(BigDecimal.valueOf(8));
+
+        assertEquals(BigInteger.valueOf(0), currencyExchange.getTwentyDollars());
+        assertEquals(BigInteger.valueOf(0), currencyExchange.getTenDollars());
+        assertEquals(BigInteger.valueOf(0), currencyExchange.getFiveDollars());
+        assertEquals(BigInteger.valueOf(4), currencyExchange.getTwoDollars());
+        assertEquals(BigInteger.valueOf(0), currencyExchange.getOneDollars());
+
+    }
+
+    /**
+     * 20 10 5 2 1
+     * 0  0  1 3 2  - 13 $
+     * 0  0  1 1 1  - 8 $
+     *
+     * @throws ChangeNotFoundException
+     */
+    @Test
+    public void testExchangeMoney8DollarCase7() throws ChangeNotFoundException {
+
+        denominationIntegerMap.put(Denomination.TWENTY, BigInteger.valueOf(0));
+        denominationIntegerMap.put(Denomination.TEN, BigInteger.valueOf(0));
+        denominationIntegerMap.put(Denomination.FIVE, BigInteger.valueOf(1));
+        denominationIntegerMap.put(Denomination.TWO, BigInteger.valueOf(3));
+        denominationIntegerMap.put(Denomination.ONE, BigInteger.valueOf(2));
+        cashRepository.initRegistryInfo(denominationIntegerMap);
+
+        assertEquals(BigDecimal.valueOf(13.0), cashRepository.getTotalAvailableAmount());
+
+
+        CurrencyExchange currencyExchange = cashRepository.exchangeMoney(BigDecimal.valueOf(8));
+
+        assertEquals(BigInteger.valueOf(0), currencyExchange.getTwentyDollars());
+        assertEquals(BigInteger.valueOf(0), currencyExchange.getTenDollars());
+        assertEquals(BigInteger.valueOf(1), currencyExchange.getFiveDollars());
+        assertEquals(BigInteger.valueOf(1), currencyExchange.getTwoDollars());
+        assertEquals(BigInteger.valueOf(1), currencyExchange.getOneDollars());
+
+    }
+
+    /**
+     * 20 10 5 2 1
+     * 0  0  1 2 4  - 13 $
+     * 0  0  1 1 1  - 8 $
+     *
+     * @throws ChangeNotFoundException
+     */
+    @Test
+    public void testExchangeMoney8DollarCase8() throws ChangeNotFoundException {
+
+        denominationIntegerMap.put(Denomination.TWENTY, BigInteger.valueOf(0));
+        denominationIntegerMap.put(Denomination.TEN, BigInteger.valueOf(0));
+        denominationIntegerMap.put(Denomination.FIVE, BigInteger.valueOf(1));
+        denominationIntegerMap.put(Denomination.TWO, BigInteger.valueOf(2));
+        denominationIntegerMap.put(Denomination.ONE, BigInteger.valueOf(4));
+        cashRepository.initRegistryInfo(denominationIntegerMap);
+
+        assertEquals(BigDecimal.valueOf(13.0), cashRepository.getTotalAvailableAmount());
+
+
+        CurrencyExchange currencyExchange = cashRepository.exchangeMoney(BigDecimal.valueOf(8));
+
+        assertEquals(BigInteger.valueOf(0), currencyExchange.getTwentyDollars());
+        assertEquals(BigInteger.valueOf(0), currencyExchange.getTenDollars());
+        assertEquals(BigInteger.valueOf(1), currencyExchange.getFiveDollars());
+        assertEquals(BigInteger.valueOf(1), currencyExchange.getTwoDollars());
+        assertEquals(BigInteger.valueOf(1), currencyExchange.getOneDollars());
+
+    }
+
+
+    /**
+     * 20 10 5 2 1
+     * 0  1  0 0 3  - 13 $
+     * No change found
+     *
+     * @throws ChangeNotFoundException
+     */
+    @Test
+    public void testExchangeMoney8DollarCase9() throws ChangeNotFoundException {
+
+        try {
+            denominationIntegerMap.put(Denomination.TWENTY, BigInteger.valueOf(0));
+            denominationIntegerMap.put(Denomination.TEN, BigInteger.valueOf(1));
+            denominationIntegerMap.put(Denomination.FIVE, BigInteger.valueOf(0));
+            denominationIntegerMap.put(Denomination.TWO, BigInteger.valueOf(0));
+            denominationIntegerMap.put(Denomination.ONE, BigInteger.valueOf(3));
+            cashRepository.initRegistryInfo(denominationIntegerMap);
+
+            assertEquals(BigDecimal.valueOf(13.0), cashRepository.getTotalAvailableAmount());
+
+
+            CurrencyExchange currencyExchange = cashRepository.exchangeMoney(BigDecimal.valueOf(8));
+        }
+        catch(ChangeNotFoundException che)
+        {
+            che.printStackTrace();
+        }
+
+
+    }
+
+
+    /**
+     * 20 10 5 2 1
+     * 0  0  2 1 1  - 13 $
+     * 0  0  1 1 1  - 8 $
+     *
+     * @throws ChangeNotFoundException
+     */
+    @Test
+    public void testExchangeMoney8DollarCase10() throws ChangeNotFoundException {
+
+        denominationIntegerMap.put(Denomination.TWENTY, BigInteger.valueOf(0));
+        denominationIntegerMap.put(Denomination.TEN, BigInteger.valueOf(0));
+        denominationIntegerMap.put(Denomination.FIVE, BigInteger.valueOf(2));
+        denominationIntegerMap.put(Denomination.TWO, BigInteger.valueOf(1));
+        denominationIntegerMap.put(Denomination.ONE, BigInteger.valueOf(1));
+        cashRepository.initRegistryInfo(denominationIntegerMap);
+
+        assertEquals(BigDecimal.valueOf(13.0), cashRepository.getTotalAvailableAmount());
+
+
+        CurrencyExchange currencyExchange = cashRepository.exchangeMoney(BigDecimal.valueOf(8));
+
+        assertEquals(BigInteger.valueOf(0), currencyExchange.getTwentyDollars());
+        assertEquals(BigInteger.valueOf(0), currencyExchange.getTenDollars());
+        assertEquals(BigInteger.valueOf(1), currencyExchange.getFiveDollars());
+        assertEquals(BigInteger.valueOf(1), currencyExchange.getTwoDollars());
+        assertEquals(BigInteger.valueOf(1), currencyExchange.getOneDollars());
+
+    }
+
 
 
     @Override
