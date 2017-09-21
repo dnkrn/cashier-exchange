@@ -159,7 +159,6 @@ public class CashExchangeTest extends TestCase {
      * test exchange 11$
      * change 11
      * 0 0 1 3 0
-     *
      * @throws ChangeNotFoundException
      */
     @Test
@@ -174,6 +173,13 @@ public class CashExchangeTest extends TestCase {
 
 
         CurrencyExchange currencyExchange = cashRepository.exchangeMoney(BigDecimal.valueOf(11));
+
+        assertEquals(BigInteger.valueOf(0), currencyExchange.getTwentyDollars());
+        assertEquals(BigInteger.valueOf(0), currencyExchange.getTenDollars());
+        assertEquals(BigInteger.valueOf(1), currencyExchange.getFiveDollars());
+        assertEquals(BigInteger.valueOf(3), currencyExchange.getTwoDollars());
+        assertEquals(BigInteger.valueOf(0), currencyExchange.getOneDollars());
+
 
         assertEquals(BigDecimal.valueOf(32.0), cashRepository.getTotalAvailableAmount());
 
