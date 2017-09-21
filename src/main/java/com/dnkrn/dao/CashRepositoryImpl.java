@@ -161,6 +161,8 @@ public class CashRepositoryImpl implements CashRepository {
 
             pendingAmount = calculatePossibleCombos(currencyExchange, pendingAmount, denomination);
 
+            denomination = currencyExchange.getMaxDenomination();
+
         }
 
         updateRegistry(pendingAmount,currencyExchange);
