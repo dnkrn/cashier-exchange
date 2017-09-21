@@ -2,82 +2,76 @@ package com.dnkrn.model;
 
 import java.math.BigInteger;
 
+/**
+ * Class that holds the currency registry state
+ */
 
-public class CurrencyRegistry {
+public class CurrencyStock {
 
-    private BigInteger availableTwenty;
+    private BigInteger availableTwenty = BigInteger.ZERO;
 
-    private BigInteger availableTen;
+    private BigInteger availableTen = BigInteger.ZERO;
 
-    private BigInteger availableFive;
+    private BigInteger availableFive = BigInteger.ZERO;
 
-    private BigInteger availableTwo;
+    private BigInteger availableTwo = BigInteger.ZERO;
 
-    private BigInteger availableOne;
+    private BigInteger availableOne = BigInteger.ZERO;
 
 
     public BigInteger getAvailableTwenty() {
         return availableTwenty;
     }
 
-    public void setAvailableTwenty(BigInteger availableTwenty) {
-        this.availableTwenty = availableTwenty;
-    }
 
     public BigInteger getAvailableTen() {
         return availableTen;
     }
 
-    public void setAvailableTen(BigInteger availableTen) {
-        this.availableTen = availableTen;
-    }
 
     public BigInteger getAvailableFive() {
         return availableFive;
     }
 
-    public void setAvailableFive(BigInteger availableFive) {
-        this.availableFive = availableFive;
-    }
 
     public BigInteger getAvailableTwo() {
         return availableTwo;
     }
 
-    public void setAvailableTwo(BigInteger availableTwo) {
-        this.availableTwo = availableTwo;
-    }
 
     public BigInteger getAvailableOne() {
         return availableOne;
     }
 
-    public void setAvailableOne(BigInteger availableOne) {
-        this.availableOne = availableOne;
-    }
 
-
+    /**
+     * Method to add the currency to the registry
+     *
+     * @param denomination
+     * @param quantity
+     * @return
+     */
     public boolean addQuantity(Denomination denomination, BigInteger quantity) {
         switch (denomination) {
 
             case TWENTY:
-                availableTwenty=availableTwenty.add(quantity);
+                availableTwenty = availableTwenty.add(quantity);
                 break;
 
             case TEN:
-                availableTen=availableTen.add(quantity);
+                availableTen = availableTen.add(quantity);
                 break;
 
             case FIVE:
-                availableFive=availableFive.add(quantity);
+                availableFive = availableFive.add(quantity);
                 break;
 
             case TWO:
-                availableTwo=availableTwo.add(quantity);
+                availableTwo = availableTwo.add(quantity);
                 break;
 
             case ONE:
-                availableOne=availableOne.add(quantity);
+                availableOne = availableOne.add(quantity);
                 break;
 
             default:
@@ -88,6 +82,14 @@ public class CurrencyRegistry {
         return true;
     }
 
+
+    /**
+     * Method to remove the value from registry
+     *
+     * @param denomination
+     * @param quantity
+     * @return
+     */
     public boolean subtractQuantity(Denomination denomination, BigInteger quantity) {
         switch (denomination) {
 
@@ -127,5 +129,44 @@ public class CurrencyRegistry {
         }
 
         return false;
+    }
+
+
+    /**
+     * Method to add the currency to the registry
+     *
+     * @param denomination
+     * @param quantity
+     * @return
+     */
+    public void setQuantity(Denomination denomination, BigInteger quantity) {
+        switch (denomination) {
+
+            case TWENTY:
+                availableTwenty = quantity;
+                break;
+
+            case TEN:
+                availableTen = quantity;
+                break;
+
+            case FIVE:
+                availableFive = quantity;
+                break;
+
+            case TWO:
+                availableTwo = quantity;
+                break;
+
+            case ONE:
+                availableOne = quantity;
+                break;
+
+            default:
+                throw new UnsupportedOperationException();
+
+        }
+
+
     }
 }

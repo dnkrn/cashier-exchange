@@ -2,7 +2,7 @@ package com.dnkrn.dao;
 
 import com.dnkrn.exception.ChangeNotFoundException;
 import com.dnkrn.model.CurrencyExchange;
-import com.dnkrn.model.CurrencyRegistry;
+import com.dnkrn.model.CurrencyStock;
 import com.dnkrn.model.Denomination;
 
 import java.math.BigDecimal;
@@ -16,80 +16,53 @@ import java.util.Map;
 public class CashRepositoryImpl implements CashRepository {
 
 
-    private CurrencyRegistry currencyRegistry = new CurrencyRegistry();
+    private CurrencyStock currencyStock;
 
+
+    public CashRepositoryImpl() {
+        currencyStock = new CurrencyStock();
+    }
 
     @Override
     public void initRegistryInfo(final Map<Denomination, BigInteger> values) {
-
-        values.forEach((denomination, quantity) -> {
-
-            switch (denomination) {
-
-                case TWENTY:
-                    currencyRegistry.setAvailableTwenty(quantity);
-                    break;
-
-                case TEN:
-                    currencyRegistry.setAvailableTen(quantity);
-                    break;
-
-                case FIVE:
-                    currencyRegistry.setAvailableFive(quantity);
-                    break;
-
-                case TWO:
-                    currencyRegistry.setAvailableTwo(quantity);
-                    break;
-
-                case ONE:
-                    currencyRegistry.setAvailableOne(quantity);
-                    break;
-
-                default:
-                    throw new UnsupportedOperationException();
-
-            }
-
-        });
-
+        values.forEach((denomination, quantity) -> currencyStock.setQuantity(denomination, quantity));
     }
 
 
     @Override
     public BigDecimal getTotalAvailableAmount() {
 
-        return Denomination.TWENTY.getValue().multiply(new BigDecimal(currencyRegistry.getAvailableTwenty()))
-                .add(Denomination.TEN.getValue().multiply(new BigDecimal(currencyRegistry.getAvailableTen())))
-                .add(Denomination.FIVE.getValue().multiply(new BigDecimal(currencyRegistry.getAvailableFive())))
-                .add(Denomination.TWO.getValue().multiply(new BigDecimal(currencyRegistry.getAvailableTwo())))
-                .add(Denomination.ONE.getValue().multiply(new BigDecimal(currencyRegistry.getAvailableOne())));
+        return Denomination.TWENTY.getValue().multiply(new BigDecimal(currencyStock.getAvailableTwenty()))
+                .add(Denomination.TEN.getValue().multiply(new BigDecimal(currencyStock.getAvailableTen())))
+                .add(Denomination.FIVE.getValue().multiply(new BigDecimal(currencyStock.getAvailableFive())))
+                .add(Denomination.TWO.getValue().multiply(new BigDecimal(currencyStock.getAvailableTwo())))
+                .add(Denomination.ONE.getValue().multiply(new BigDecimal(currencyStock.getAvailableOne())));
 
     }
 
 
     @Override
-    public BigInteger getAvailableCurrencyCount(Denomination denomination) {
+    public BigInteger getAvailableCurrencyQuantity(Denomination denomination) {
 
         switch (denomination) {
 
             case TWENTY:
-                return currencyRegistry.getAvailableTwenty();
+                return currencyStock.getAvailableTwenty();
 
             case TEN:
-                return currencyRegistry.getAvailableTen();
+                return currencyStock.getAvailableTen();
 
             case FIVE:
-                return currencyRegistry.getAvailableFive();
+                return currencyStock.getAvailableFive();
 
             case TWO:
-                return currencyRegistry.getAvailableTwo();
+                return currencyStock.getAvailableTwo();
 
             case ONE:
-                return currencyRegistry.getAvailableOne();
+                return currencyStock.getAvailableOne();
 
             default:
-                throw new UnsupportedOperationException();
+                return BigInteger.ZERO;
 
         }
     }
@@ -101,7 +74,7 @@ public class CashRepositoryImpl implements CashRepository {
         if (BigInteger.ZERO.compareTo(quantity) >= 0) {
             return false;
         }
-        return currencyRegistry.addQuantity(denomination, quantity);
+        return currencyStock.addQuantity(denomination, quantity);
     }
 
 
@@ -111,50 +84,66 @@ public class CashRepositoryImpl implements CashRepository {
         if (BigInteger.ZERO.compareTo(quantity) >= 0) {
             return false;
         }
-       return currencyRegistry.subtractQuantity(denomination,quantity);
+        return currencyStock.subtractQuantity(denomination, quantity);
     }
 
 
     @Override
-    public CurrencyExchange exchangeMoney(BigDecimal exchangeAmount) throws ChangeNotFoundException{
+    public CurrencyExchange exchangeMoney(BigDecimal exchangeAmount) throws ChangeNotFoundException {
 
         CurrencyExchange currencyExchange = new CurrencyExchange();
 
-        /*for(Denomination denomination: Denomination.values())
-        {
-            if(exchangeAmount.compareTo(denomination.getValue()) >=0  )
-            {
-                BigDecimal[] divideAndRemainder= exchangeAmount.divideAndRemainder(denomination.getValue());
-                BigInteger change = divideAndRemainder[0].toBigInteger();
-                BigInteger pendingAmount= divideAndRemainder[1].toBigInteger();
-                int i=change.intValue();
-                while( i >= 0 && pendingAmount.compareTo(BigInteger.ZERO) >=0) {
+        BigDecimal pendingAmount = calculatePossibleCombos(currencyExchange, exchangeAmount, Denomination.TWENTY);
 
-                    if (getAvailableCurrencyCount(denomination).compareTo(change) >= 0) {
-                        takeFromRegistry(denomination, change);
-                        currencyExchange.setQuantity(denomination, change);
-                        exchangeAmount = divideAndRemainder[1];
-                    }
+        Denomination denomination = currencyExchange.getMaxDenomination();
 
-                }
-            }
-        }*/
+        while (pendingAmount.compareTo(BigDecimal.ZERO) > 0
+                && !denomination.equals(Denomination.UNKNOWN)) {
 
+            currencyExchange.setQuantity(denomination, BigInteger.valueOf(-1));
 
-        Denomination[] values = Denomination.values();
+            pendingAmount = pendingAmount.add(denomination.getValue());
 
-        Denomination lastSuccessDenom=values[0];
+            denomination = denomination.nextValue(denomination);
 
+            pendingAmount = calculatePossibleCombos(currencyExchange, pendingAmount, denomination);
 
-
-
-
-        if(exchangeAmount.compareTo(BigDecimal.ZERO) > 0)
-        {
-            throw new ChangeNotFoundException("no change available");
         }
+
+        updateRegistry(pendingAmount,currencyExchange);
+
         return currencyExchange;
     }
 
+
+    public BigDecimal calculatePossibleCombos(CurrencyExchange currencyExchange, BigDecimal exchangeAmount, Denomination denomination) {
+
+        if (denomination.equals(Denomination.UNKNOWN) || exchangeAmount.compareTo(BigDecimal.ZERO) <= 0) {
+            return exchangeAmount;
+        }
+
+        BigDecimal[] divideAndRemainder = exchangeAmount.divideAndRemainder(denomination.getValue());
+        BigInteger change = divideAndRemainder[0].toBigInteger();
+        BigInteger pendingAmount = divideAndRemainder[1].toBigInteger();
+
+        if (exchangeAmount.compareTo(denomination.getValue()) >= 0 && getAvailableCurrencyQuantity(denomination).compareTo(change) >= 0) {
+            currencyExchange.setQuantity(denomination, change);
+            return calculatePossibleCombos(currencyExchange, new BigDecimal(pendingAmount), denomination);
+
+        } else {
+            return calculatePossibleCombos(currencyExchange, exchangeAmount, denomination.nextValue(denomination));
+        }
+    }
+
+    private void updateRegistry(BigDecimal pendingAmount, CurrencyExchange currencyExchange) throws ChangeNotFoundException {
+        if (pendingAmount.compareTo(BigDecimal.ZERO) > 0) {
+            throw new ChangeNotFoundException("no change found");
+        } else {
+            for (Denomination denominationVal : Denomination.values()) {
+                BigInteger quantity = currencyExchange.getQuantity(denominationVal);
+                takeFromRegistry(denominationVal, quantity);
+            }
+        }
+    }
 
 }

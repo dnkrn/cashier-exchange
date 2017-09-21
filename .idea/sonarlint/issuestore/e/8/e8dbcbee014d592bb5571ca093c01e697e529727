@@ -1,4 +1,6 @@
 
-Psquid:S1481"5Remove this unused "lastSuccessDenom" local variable.(îøŠZ8¥¤ÅÅé+
-_squid:S1854"DRemove this useless assignment to local variable "lastSuccessDenom".(îøŠZ8¥¤ÅÅé+
+@squid:S1640"Convert this Map to an EnumMap.(ÌÆìÉûÿÿÿÿ8«Ó»åé+
+Y
+squid:S106"9Replace this use of System.out or System.err by a logger.(ÿîâßúÿÿÿÿ8åÕ³åé+
+Nsquid:S1172"-Remove this unused method parameter "reduce".(¿º±ßÿÿÿÿÿ8«Ó»åé+
 gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(İ”’Á8š½ÁÅé+

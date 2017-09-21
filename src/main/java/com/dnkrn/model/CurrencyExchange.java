@@ -3,8 +3,9 @@ package com.dnkrn.model;
 import java.math.BigInteger;
 
 /**
- * Created by dinakaran on 9/18/17.
+ * Model class which holds the currency quanity to be returned for each denomination
  */
+
 public class CurrencyExchange {
 
     private BigInteger twentyDollars = BigInteger.ZERO;
@@ -58,6 +59,12 @@ public class CurrencyExchange {
         this.oneDollars = oneDollars;
     }
 
+    /**
+     * updates the quantity with the given quantity
+     *
+     * @param denomination
+     * @param quantity
+     */
     public void setQuantity(Denomination denomination, BigInteger quantity) {
         switch (denomination) {
 
@@ -86,4 +93,58 @@ public class CurrencyExchange {
 
         }
     }
+
+    /**
+     * returns the maximum denomination which has value > zero
+     *
+     * @return
+     */
+    public Denomination getMaxDenomination() {
+
+        if (this.twentyDollars.compareTo(BigInteger.ZERO) > 0) {
+            return Denomination.TWENTY;
+        } else if (this.tenDollars.compareTo(BigInteger.ZERO) > 0) {
+            return Denomination.TEN;
+        } else if (this.fiveDollars.compareTo(BigInteger.ZERO) > 0) {
+            return Denomination.FIVE;
+        } else if (this.twoDollars.compareTo(BigInteger.ZERO) > 0) {
+            return Denomination.TWO;
+        } else if (this.oneDollars.compareTo(BigInteger.ZERO) > 0) {
+            return Denomination.ONE;
+        }
+        return Denomination.UNKNOWN;
+
+
+    }
+
+    /**
+     * method to return the quantity available for each currency
+     * @param denomination
+     * @return
+     */
+    public BigInteger getQuantity(Denomination denomination) {
+
+        switch (denomination) {
+
+            case TWENTY:
+                return twentyDollars;
+
+            case TEN:
+                return tenDollars;
+
+            case FIVE:
+                return fiveDollars;
+
+            case TWO:
+                return twoDollars;
+
+            case ONE:
+                return oneDollars;
+
+            default:
+                return BigInteger.ZERO;
+
+        }
+    }
+
 }
