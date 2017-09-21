@@ -17,3 +17,10 @@ _
 /src/main/java/com/dnkrn/dao/CashRepository.java,b/a/ba1d18e47ca9a1ef559293ecd6760fe12f1763f3
 c
 3src/main/java/com/dnkrn/dao/CashRepositoryImpl.java,e/8/e8dbcbee014d592bb5571ca093c01e697e529727
+`
+0src/main/java/com/dnkrn/model/CurrencyStock.java,c/4/c4a8543ae4f3f76c7f737f50c5a360593fb37577
+b
+2src/test/java/com/dnkrn/test/CashExchangeTest.java,e/2/e232dba3ea2ea37770c0d5c217e6a1c017dc7dcb
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302

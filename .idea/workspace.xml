@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="904b626f-d1df-4d5f-af5b-813d6c1b62d8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/com/dnkrn/test/CashExchangeTest.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/dnkrn/controller/CashierExchange.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/test/java/com/dnkrn/dao/CashRepositoryImplTest.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/dnkrn/model/CurrencyRegistry.java" afterPath="$PROJECT_DIR$/src/main/java/com/dnkrn/model/CurrencyStock.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/4/d4f63e583164af3dc2af1aae33bb520be329afed" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/4/d4f63e583164af3dc2af1aae33bb520be329afed" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/8/e8dbcbee014d592bb5571ca093c01e697e529727" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/8/e8dbcbee014d592bb5571ca093c01e697e529727" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/dnkrn/dao/CashRepository.java" afterPath="$PROJECT_DIR$/src/main/java/com/dnkrn/dao/CashRepository.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/dnkrn/dao/CashRepositoryImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/dnkrn/dao/CashRepositoryImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/dnkrn/exception/ChangeNotFoundException.java" afterPath="$PROJECT_DIR$/src/main/java/com/dnkrn/exception/ChangeNotFoundException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/dnkrn/model/CurrencyExchange.java" afterPath="$PROJECT_DIR$/src/main/java/com/dnkrn/model/CurrencyExchange.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/dnkrn/model/Denomination.java" afterPath="$PROJECT_DIR$/src/main/java/com/dnkrn/model/Denomination.java" />
-    </list>
+    <list default="true" id="904b626f-d1df-4d5f-af5b-813d6c1b62d8" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -865,10 +852,10 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32959184" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32959184" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32959184" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25579977" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25579977" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="SonarLint" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32959184" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32959184" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
