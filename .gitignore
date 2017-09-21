@@ -3,6 +3,7 @@ target/
 .idea/tasks.xml
 .idea/vcs.xml
 .idea/sonarlint/**
+.idea/**
 *.iml
 out/
 
