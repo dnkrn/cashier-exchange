@@ -232,9 +232,9 @@ public class CashRepositoryImpl implements CashRepository {
             currencyExchange.setQuantity(denomination, change);
             return calculatePossibleCombos(currencyExchange, new BigDecimal(pendingAmount), denomination.nextValue(denomination));
 
-        } else {
-            return calculatePossibleCombos(currencyExchange, exchangeAmount, denomination.nextValue(denomination));
         }
+        return calculatePossibleCombos(currencyExchange, exchangeAmount, denomination.nextValue(denomination));
+
     }
 
     /**
@@ -247,13 +247,10 @@ public class CashRepositoryImpl implements CashRepository {
     private void updateRegistry(BigDecimal pendingAmount, CurrencyExchange currencyExchange) throws ChangeNotFoundException {
         if (pendingAmount.compareTo(BigDecimal.ZERO) > 0) {
             throw new ChangeNotFoundException("no change found");
-        } else {
-            for (Denomination denominationVal : Denomination.values()) {
-                BigInteger quantity = currencyExchange.getQuantity(denominationVal);
-                takeFromRegistry(denominationVal, quantity);
-            }
+        }
+        for (Denomination denominationVal : Denomination.values()) {
+            BigInteger quantity = currencyExchange.getQuantity(denominationVal);
+            takeFromRegistry(denominationVal, quantity);
         }
     }
-
-
 }
