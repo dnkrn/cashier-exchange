@@ -169,4 +169,28 @@ public class CurrencyStock {
 
 
     }
+
+
+    /**
+     * Method to get maximum denomination from the registry
+     *
+     * @return
+     */
+    public Denomination getMaximumAvailableDenomination() {
+
+        if (this.availableTwenty.compareTo(BigInteger.ZERO) > 0) {
+            return Denomination.TWENTY;
+        } else if (this.availableTen.compareTo(BigInteger.ZERO) > 0) {
+            return Denomination.TEN;
+        } else if (this.availableFive.compareTo(BigInteger.ZERO) > 0) {
+            return Denomination.FIVE;
+        } else if (this.availableTwo.compareTo(BigInteger.ZERO) > 0) {
+            return Denomination.TWO;
+        } else if (this.availableOne.compareTo(BigInteger.ZERO) > 0) {
+            return Denomination.ONE;
+        }
+        return Denomination.UNKNOWN;
+
+
+    }
 }

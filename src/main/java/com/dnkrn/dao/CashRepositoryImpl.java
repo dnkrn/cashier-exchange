@@ -88,6 +88,7 @@ public class CashRepositoryImpl implements CashRepository {
     /**
      * returns true if the put operation is success
      * adds the given currency into registry
+     *
      * @param denomination
      * @param quantity
      * @return
@@ -106,6 +107,7 @@ public class CashRepositoryImpl implements CashRepository {
     /**
      * returns true if the take operations is success
      * removes the fiven currency from registry
+     *
      * @param denomination
      * @param quantity
      * @return
@@ -120,7 +122,6 @@ public class CashRepositoryImpl implements CashRepository {
     }
 
 
-
     /**
      * returns the currency change for each Currency given
      *
@@ -131,7 +132,7 @@ public class CashRepositoryImpl implements CashRepository {
     @Override
     public CurrencyExchange exchangeMoney(BigDecimal exchangeAmount) throws ChangeNotFoundException {
 
-       //Object which hold the returned denominations
+        //Object which hold the returned denominations
         CurrencyExchange currencyExchange = new CurrencyExchange();
 
         //calculates the possible amount and returns the pending amount if denomination is not available
@@ -150,6 +151,18 @@ public class CashRepositoryImpl implements CashRepository {
 
         Denomination denomination = currencyExchange.getMaxDenomination();
 
+        /**
+         * this should not be unknown initially
+         * if none of the denominations are available use the max denomination from stock
+         *
+         */
+        if (Denomination.UNKNOWN.equals(denomination)) {
+            denomination = currencyStock.getMaximumAvailableDenomination();
+
+            pendingAmount = pendingAmount.subtract(denomination.getValue());
+
+        }
+
         while (pendingAmount.compareTo(BigDecimal.ZERO) > 0
                 && !denomination.equals(Denomination.UNKNOWN)) {
 
@@ -165,13 +178,14 @@ public class CashRepositoryImpl implements CashRepository {
 
         }
 
-        updateRegistry(pendingAmount,currencyExchange);
+        updateRegistry(pendingAmount, currencyExchange);
 
         return currencyExchange;
     }
 
     /**
      * Calculates the possible combinations
+     *
      * @param currencyExchange
      * @param exchangeAmount
      * @param denomination
@@ -201,12 +215,22 @@ public class CashRepositoryImpl implements CashRepository {
         BigInteger pendingAmount = divideAndRemainder[1].toBigInteger();
 
         /**
-         * checks for pending amount and if the currency is availble in registry.
-         * if not availble recursively call the next denomination
+         * checks for pending amount and if the currency is available in registry.
+         * if not available recursively call the next denomination
+         *
+         *
+         * when the available quantity is less than change calculated, use the availble quantity
+         * add the pending amount by the difference of the change
          */
-        if (exchangeAmount.compareTo(denomination.getValue()) >= 0 && getAvailableCurrencyQuantity(denomination).compareTo(change) >= 0) {
+        BigInteger availableQuantity = getAvailableCurrencyQuantity(denomination);
+
+        if (availableQuantity.compareTo(change) <= 0) {
+            pendingAmount = pendingAmount.add(denomination.getValue().toBigInteger().multiply(change.subtract(availableQuantity)));
+            change = availableQuantity;
+        }
+        if (exchangeAmount.compareTo(denomination.getValue()) >= 0 && availableQuantity.compareTo(BigInteger.ZERO) > 0) {
             currencyExchange.setQuantity(denomination, change);
-            return calculatePossibleCombos(currencyExchange, new BigDecimal(pendingAmount), denomination);
+            return calculatePossibleCombos(currencyExchange, new BigDecimal(pendingAmount), denomination.nextValue(denomination));
 
         } else {
             return calculatePossibleCombos(currencyExchange, exchangeAmount, denomination.nextValue(denomination));
@@ -215,6 +239,7 @@ public class CashRepositoryImpl implements CashRepository {
 
     /**
      * updates the currency stock
+     *
      * @param pendingAmount
      * @param currencyExchange
      * @throws ChangeNotFoundException
@@ -229,5 +254,6 @@ public class CashRepositoryImpl implements CashRepository {
             }
         }
     }
+
 
 }
