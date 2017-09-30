@@ -151,29 +151,19 @@ public class CashRepositoryImpl implements CashRepository {
 
         Denomination denomination = currencyExchange.getMaxDenomination();
 
-        /**
-         * this should not be unknown initially
-         * if none of the denominations are available use the max denomination from stock
-         *
-         */
-        if (Denomination.UNKNOWN.equals(denomination)) {
-            denomination = currencyStock.getMaximumAvailableDenomination();
-
-            pendingAmount = pendingAmount.subtract(denomination.getValue());
-
-        }
-
         while (pendingAmount.compareTo(BigDecimal.ZERO) > 0
                 && !denomination.equals(Denomination.UNKNOWN)) {
-
+             //Reducing denomination by 1 and adding the pending value
             currencyExchange.setQuantity(denomination, BigInteger.valueOf(-1));
 
             pendingAmount = pendingAmount.add(denomination.getValue());
 
+            //get the next denomination value
             denomination = denomination.nextValue(denomination);
-
+            //calculate the next possible combos
             pendingAmount = calculatePossibleCombos(currencyExchange, pendingAmount, denomination);
 
+            //get the next max Denomination
             denomination = currencyExchange.getMaxDenomination();
 
         }
@@ -223,12 +213,13 @@ public class CashRepositoryImpl implements CashRepository {
          * add the pending amount by the difference of the change
          */
         BigInteger availableQuantity = getAvailableCurrencyQuantity(denomination);
-
+        //check if the available quantity is less than needed
         if (availableQuantity.compareTo(change) <= 0) {
+            //update the pending amount after calculating available quantity
             pendingAmount = pendingAmount.add(denomination.getValue().toBigInteger().multiply(change.subtract(availableQuantity)));
             change = availableQuantity;
         }
-        if (exchangeAmount.compareTo(denomination.getValue()) >= 0 && availableQuantity.compareTo(BigInteger.ZERO) > 0) {
+        if (exchangeAmount.compareTo(denomination.getValue()) >= 0 && change.compareTo(BigInteger.ZERO) > 0) {
             currencyExchange.setQuantity(denomination, change);
             return calculatePossibleCombos(currencyExchange, new BigDecimal(pendingAmount), denomination.nextValue(denomination));
 
