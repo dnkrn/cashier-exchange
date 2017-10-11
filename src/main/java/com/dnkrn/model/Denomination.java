@@ -1,7 +1,5 @@
 package com.dnkrn.model;
 
-import java.math.BigDecimal;
-
 /**
  * Enum which holds the currency value
  **/
@@ -11,23 +9,23 @@ public enum Denomination {
      * Available Denominations 20,10,5,2,1
      */
 
-    TWENTY(BigDecimal.valueOf(20.0)),
-    TEN(BigDecimal.valueOf(10.0)) ,
-    FIVE(BigDecimal.valueOf(5.0)),
-    TWO(BigDecimal.valueOf(2.0)),
-    ONE(BigDecimal.valueOf(1.0)),
-    UNKNOWN(BigDecimal.valueOf(0.0));
+    TWENTY(20.0),
+    TEN(10.0),
+    FIVE(5.0),
+    TWO(2.0),
+    ONE(1.0),
+    UNKNOWN(0.0);
 
 
-    private BigDecimal denominationVal;
+    private double denominationVal;
 
 
-    Denomination(BigDecimal denominationVal) {
+    Denomination(double denominationVal) {
         this.denominationVal = denominationVal;
     }
 
 
-    public BigDecimal getValue() {
+    public double getValue() {
         return denominationVal;
     }
 

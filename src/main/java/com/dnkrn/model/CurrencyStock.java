@@ -1,6 +1,5 @@
 package com.dnkrn.model;
 
-import java.math.BigInteger;
 
 /**
  * Class that holds the currency registry state
@@ -8,38 +7,38 @@ import java.math.BigInteger;
 
 public class CurrencyStock {
 
-    private BigInteger availableTwenty = BigInteger.ZERO;
+    private int availableTwenty = 0;
 
-    private BigInteger availableTen = BigInteger.ZERO;
+    private int availableTen = 0;
 
-    private BigInteger availableFive = BigInteger.ZERO;
+    private int availableFive = 0;
 
-    private BigInteger availableTwo = BigInteger.ZERO;
+    private int availableTwo = 0;
 
-    private BigInteger availableOne = BigInteger.ZERO;
+    private int availableOne= 0;
 
 
-    public BigInteger getAvailableTwenty() {
+    public int getAvailableTwenty() {
         return availableTwenty;
     }
 
 
-    public BigInteger getAvailableTen() {
+    public int getAvailableTen() {
         return availableTen;
     }
 
 
-    public BigInteger getAvailableFive() {
+    public int getAvailableFive() {
         return availableFive;
     }
 
 
-    public BigInteger getAvailableTwo() {
+    public int getAvailableTwo() {
         return availableTwo;
     }
 
 
-    public BigInteger getAvailableOne() {
+    public int getAvailableOne() {
         return availableOne;
     }
 
@@ -51,27 +50,28 @@ public class CurrencyStock {
      * @param quantity
      * @return
      */
-    public boolean addQuantity(Denomination denomination, BigInteger quantity) {
+    public boolean addQuantity(Denomination denomination, int quantity) {
+
         switch (denomination) {
 
             case TWENTY:
-                availableTwenty = availableTwenty.add(quantity);
+                availableTwenty = availableTwenty+quantity;
                 break;
 
             case TEN:
-                availableTen = availableTen.add(quantity);
+                availableTen = availableTen+quantity;
                 break;
 
             case FIVE:
-                availableFive = availableFive.add(quantity);
+                availableFive = availableFive+quantity;
                 break;
 
             case TWO:
-                availableTwo = availableTwo.add(quantity);
+                availableTwo = availableTwo+quantity;
                 break;
 
             case ONE:
-                availableOne = availableOne.add(quantity);
+                availableOne = availableOne+quantity;
                 break;
 
             default:
@@ -90,36 +90,38 @@ public class CurrencyStock {
      * @param quantity
      * @return
      */
-    public boolean subtractQuantity(Denomination denomination, BigInteger quantity) {
+    public boolean subtractQuantity(Denomination denomination, int quantity) {
+
+
         switch (denomination) {
 
             case TWENTY:
-                if (availableTwenty.subtract(quantity).compareTo(BigInteger.ZERO) >= 0) {
-                    availableTwenty = availableTwenty.subtract(quantity);
+                if (availableTwenty-quantity >= 0) {
+                    availableTwenty = availableTwenty-quantity;
                     return true;
                 }
                 break;
             case TEN:
-                if (availableTen.subtract(quantity).compareTo(BigInteger.ZERO) >= 0) {
-                    availableTen = availableTen.subtract(quantity);
+                if (availableTen-quantity >= 0) {
+                    availableTen = availableTen-quantity;
                     return true;
                 }
                 break;
             case FIVE:
-                if (availableFive.subtract(quantity).compareTo(BigInteger.ZERO) >= 0) {
-                    availableFive = availableFive.subtract(quantity);
+                if (availableFive-quantity >= 0) {
+                    availableFive = availableFive-quantity;
                     return true;
                 }
                 break;
             case TWO:
-                if (availableTwo.subtract(quantity).compareTo(BigInteger.ZERO) >= 0) {
-                    availableTwo = availableTwo.subtract(quantity);
+                if (availableTwo-quantity >= 0) {
+                    availableTwo = availableTwo-quantity;
                     return true;
                 }
                 break;
             case ONE:
-                if (availableOne.subtract(quantity).compareTo(BigInteger.ZERO) >= 0) {
-                    availableOne = availableOne.subtract(quantity);
+                if (availableOne-quantity >= 0) {
+                    availableOne = availableOne-quantity;
                     return true;
                 }
                 break;
@@ -139,7 +141,7 @@ public class CurrencyStock {
      * @param quantity
      * @return
      */
-    public void setQuantity(Denomination denomination, BigInteger quantity) {
+    public void setQuantity(Denomination denomination, int quantity) {
         switch (denomination) {
 
             case TWENTY:
@@ -166,5 +168,10 @@ public class CurrencyStock {
                 throw new UnsupportedOperationException();
 
         }
+
+
+
     }
+
+
 }

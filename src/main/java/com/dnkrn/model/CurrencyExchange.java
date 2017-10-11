@@ -1,6 +1,5 @@
 package com.dnkrn.model;
 
-import java.math.BigInteger;
 
 /**
  * Model class which holds the currency quanity to be returned for each denomination
@@ -8,54 +7,54 @@ import java.math.BigInteger;
 
 public class CurrencyExchange {
 
-    private BigInteger twentyDollars = BigInteger.ZERO;
+    private int twentyDollars = 0;
 
-    private BigInteger tenDollars = BigInteger.ZERO;
+    private int tenDollars = 0;
 
-    private BigInteger fiveDollars = BigInteger.ZERO;
+    private int fiveDollars = 0;
 
-    private BigInteger twoDollars = BigInteger.ZERO;
+    private int twoDollars = 0;
 
-    private BigInteger oneDollars = BigInteger.ZERO;
+    private int oneDollars = 0;
 
 
-    public BigInteger getTwentyDollars() {
+    public int getTwentyDollars() {
         return twentyDollars;
     }
 
-    public void setTwentyDollars(BigInteger twentyDollars) {
+    public void setTwentyDollars(int twentyDollars) {
         this.twentyDollars = twentyDollars;
     }
 
-    public BigInteger getTenDollars() {
+    public int getTenDollars() {
         return tenDollars;
     }
 
-    public void setTenDollars(BigInteger tenDollars) {
+    public void setTenDollars(int tenDollars) {
         this.tenDollars = tenDollars;
     }
 
-    public BigInteger getFiveDollars() {
+    public int getFiveDollars() {
         return fiveDollars;
     }
 
-    public void setFiveDollars(BigInteger fiveDollars) {
+    public void setFiveDollars(int fiveDollars) {
         this.fiveDollars = fiveDollars;
     }
 
-    public BigInteger getTwoDollars() {
+    public int getTwoDollars() {
         return twoDollars;
     }
 
-    public void setTwoDollars(BigInteger twoDollars) {
+    public void setTwoDollars(int twoDollars) {
         this.twoDollars = twoDollars;
     }
 
-    public BigInteger getOneDollars() {
+    public int getOneDollars() {
         return oneDollars;
     }
 
-    public void setOneDollars(BigInteger oneDollars) {
+    public void setOneDollars(int oneDollars) {
         this.oneDollars = oneDollars;
     }
 
@@ -65,27 +64,27 @@ public class CurrencyExchange {
      * @param denomination
      * @param quantity
      */
-    public void setQuantity(Denomination denomination, BigInteger quantity) {
+    public void setQuantity(Denomination denomination, int quantity) {
         switch (denomination) {
 
             case TWENTY:
-                twentyDollars = twentyDollars.add(quantity);
+                twentyDollars = twentyDollars+ quantity;
                 break;
 
             case TEN:
-                tenDollars = tenDollars.add(quantity);
+                tenDollars = tenDollars+ quantity;
                 break;
 
             case FIVE:
-                fiveDollars = fiveDollars.add(quantity);
+                fiveDollars = fiveDollars+ quantity;
                 break;
 
             case TWO:
-                twoDollars = twoDollars.add(quantity);
+                twoDollars = twoDollars+ quantity;
                 break;
 
             case ONE:
-                oneDollars = oneDollars.add(quantity);
+                oneDollars = oneDollars+ quantity;
                 break;
 
             default:
@@ -101,15 +100,15 @@ public class CurrencyExchange {
      */
     public Denomination getMaxDenomination() {
 
-        if (this.twentyDollars.compareTo(BigInteger.ZERO) > 0) {
+        if (this.twentyDollars > 0) {
             return Denomination.TWENTY;
-        } else if (this.tenDollars.compareTo(BigInteger.ZERO) > 0) {
+        } else if (this.tenDollars > 0) {
             return Denomination.TEN;
-        } else if (this.fiveDollars.compareTo(BigInteger.ZERO) > 0) {
+        } else if (this.fiveDollars > 0) {
             return Denomination.FIVE;
-        } else if (this.twoDollars.compareTo(BigInteger.ZERO) > 0) {
+        } else if (this.twoDollars > 0) {
             return Denomination.TWO;
-        } else if (this.oneDollars.compareTo(BigInteger.ZERO) > 0) {
+        } else if (this.oneDollars > 0) {
             return Denomination.ONE;
         }
         return Denomination.UNKNOWN;
@@ -122,7 +121,7 @@ public class CurrencyExchange {
      * @param denomination
      * @return
      */
-    public BigInteger getQuantity(Denomination denomination) {
+    public int getQuantity(Denomination denomination) {
 
         switch (denomination) {
 
@@ -142,7 +141,7 @@ public class CurrencyExchange {
                 return oneDollars;
 
             default:
-                return BigInteger.ZERO;
+                return 0;
 
         }
     }

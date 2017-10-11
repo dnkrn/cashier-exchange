@@ -4,8 +4,6 @@ import com.dnkrn.exception.ChangeNotFoundException;
 import com.dnkrn.model.CurrencyExchange;
 import com.dnkrn.model.Denomination;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Map;
 
 /**
@@ -20,7 +18,7 @@ public interface CashRepository {
      * @param values
      */
 
-    void initRegistryInfo(Map<Denomination, BigInteger> values);
+    void initRegistryInfo(Map<Denomination, Integer> values);
 
 
     /**
@@ -29,7 +27,7 @@ public interface CashRepository {
      * @return
      */
 
-    BigDecimal getTotalAvailableAmount();
+    double getTotalAvailableAmount();
 
     /**
      * returns the number of quantity available for each denomination
@@ -38,7 +36,7 @@ public interface CashRepository {
      * @return
      */
 
-    BigInteger getAvailableCurrencyQuantity(Denomination denomination);
+    int getAvailableCurrencyQuantity(Denomination denomination);
 
     /**
      * returns true if the put operation is success
@@ -48,7 +46,7 @@ public interface CashRepository {
      * @return
      */
 
-    boolean putInRegistry(Denomination denomination, BigInteger quantity);
+    boolean putInRegistry(Denomination denomination, int quantity);
 
     /**
      * returns true if the take operations is success
@@ -58,7 +56,7 @@ public interface CashRepository {
      * @return
      */
 
-    boolean takeFromRegistry(Denomination denomination, BigInteger quantity);
+    boolean takeFromRegistry(Denomination denomination, int quantity);
 
     /**
      * returns the currency change for each Currency given
@@ -68,6 +66,6 @@ public interface CashRepository {
      * @throws ChangeNotFoundException
      */
 
-    CurrencyExchange exchangeMoney(BigDecimal exchangeAmount) throws ChangeNotFoundException;
+    CurrencyExchange exchangeMoney(double exchangeAmount) throws ChangeNotFoundException;
 
 }
