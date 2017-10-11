@@ -216,11 +216,11 @@ public class CashRepositoryImpl implements CashRepository {
 
         int availableQuantity = getAvailableCurrencyQuantity(denomination);
 
-        if (availableQuantity-change <= 0) {
+        if (availableQuantity-change < 0) {
             pendingAmount = pendingAmount + (denomination.getValue() * (change - availableQuantity));
             change = availableQuantity;
         }
-        if ((exchangeAmount - denomination.getValue()) >= 0 && availableQuantity > 0) {
+        if (exchangeAmount - denomination.getValue() >= 0 && availableQuantity > 0) {
 
             currencyExchange.setQuantity(denomination, change);
             return calculatePossibleCombos(currencyExchange, pendingAmount, denomination.nextValue(denomination));
